@@ -1,5 +1,5 @@
 package com.github.zikl00.adventura.logika;
-import java.util.*;
+//import java.util.*;
 /**
  *  Třída Hra - třída představující logiku adventury.
  * 
@@ -12,7 +12,7 @@ import java.util.*;
  *@version    pro školní rok 2015/2016
  */
 
-public class Hra implements IHra {
+public class Hra implements IHra{
     private SeznamPrikazu platnePrikazy;    // obsahuje seznam přípustných příkazů
     private HerniPlan herniPlan;
     private boolean konecHry = false;
@@ -101,7 +101,7 @@ public class Hra implements IHra {
      *  Nastaví, že je konec hry, metodu využívá třída PrikazKonec,
      *  mohou ji použít i další implementace rozhraní Prikaz.
      *  
-     *  @param  konecHry  hodnota false= konec hry, true = hra pokračuje
+     *  @param  konecHry hodnota false = konec hry, true = hra pokračuje
      */
     void setKonecHry(boolean konecHry) {
         this.konecHry = konecHry;

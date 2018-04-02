@@ -2,6 +2,7 @@
  * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
 package com.github.zikl00.adventura.logika;
 
+import java.util.Observable;
 
 /**
  *  Třída PrikazSeber implementuje pro hru příkaz seber.
@@ -10,7 +11,7 @@ package com.github.zikl00.adventura.logika;
  *@author     Libor Zíka
  *@version    1.01
  */
-public class PrikazSeber implements IPrikaz
+public class PrikazSeber extends Observable implements IPrikaz
 {
     //== Datové atributy (statické i instancí)======================================
     private static final String NAZEV = "seber";
@@ -40,7 +41,7 @@ public class PrikazSeber implements IPrikaz
         }        
         String nazevSbiraneVeci = parametry[0];        
         Prostor aktualni = hra.getHerniPlan().getAktualniProstor();        
-        Vec sbirana = aktualni.odeberVec(nazevSbiraneVeci);        
+        Vec sbirana = aktualni.odeberVec(nazevSbiraneVeci);
         if(sbirana == null){
             return "Nic takového tu není.";
         }else if(hra.getHerniPlan().getHrdinka().vratInventar().size()>5){
@@ -49,16 +50,18 @@ public class PrikazSeber implements IPrikaz
         }else{
             if(hra.getHerniPlan().getAktualniProstor().getPostava() != null && !(hra.getHerniPlan().getAktualniProstor().pratelskaPostava())){
                 aktualni.vlozVec(sbirana);
-                System.out.print( hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě majznul přes ruce a ubral 2 životy.");
+                //System.out.print( hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě majznul přes ruce a ubral 2 životy.");
                 hra.getHerniPlan().getHrdinka().seberZivoty(2);
                 if( hra.getHerniPlan().getHrdinka().vratZivotyCislo() < 1){
-                       System.out.println("\nUmřela jsi a tvé dobrodružství zde končí...");
-                       return "";
+                       //System.out.println("\nUmřela jsi a tvé dobrodružství zde končí...");
+                       return hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě majznul přes ruce a ubral 2 životy." + "\nUmřela jsi a tvé dobrodružství zde končí...";
                    }
-                return "";
+                return hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě majznul přes ruce a ubral 2 životy.";
             }
             if(sbirana.jePrenositelna()){
                hra.getHerniPlan().getHrdinka().vlozVec(sbirana);
+               this.setChanged();
+               this.notifyObservers();
                return "Sebrala jsi: " + sbirana.getNazev();
             }
             else{

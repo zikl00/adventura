@@ -1,6 +1,9 @@
 package com.github.zikl00.adventura.logika;
 
 import java.util.*;
+import java.util.Observable;
+//import com.github.zikl00.adventura.ui.observerVychody;
+import com.github.zikl00.adventura.logika.*;
 /**
  *  Class HerniPlan - třída představující mapu a stav adventury.
  * 
@@ -12,7 +15,7 @@ import java.util.*;
  *@author     Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Libor Zíka
  *@version    pro školní rok 2015/2016
  */
-public class HerniPlan {
+public class HerniPlan extends Observable{
     
     private Prostor aktualniProstor;
     private Hrdinka hrdinka;
@@ -33,7 +36,7 @@ public class HerniPlan {
      *  Definuje postavy a předměty a jejich umístění.
      *  Jako výchozí aktuální prostor nastaví zničenou vesnici.
      */
-    private void zalozProstoryHry() {
+    public void zalozProstoryHry() {
         // vytvářejí se jednotlivé prostory
         
         Prostor znicenaVesnice = new Prostor(0, "zničená_vesnice","zničená vesnice, s rozpadlými vypálenými domky\nTaková spoušť, kdo to jen mohl udělat a proč");
@@ -489,7 +492,7 @@ public class HerniPlan {
         tajnaMistnost.vlozVec(skrin2);
         
         //prvniCela
-        Postava carodejuvUcen = new Postava ("čarodějův učen", false, 18, 12);
+        Postava carodejuvUcen = new Postava ("čarodějův učeň", false, 18, 12);
         prvniCela.vlozPostavu(carodejuvUcen);
         Vec kbleik = new Vec ("kbelík", false, -10);
         prvniCela.vlozVec(kbleik);
@@ -575,11 +578,13 @@ public class HerniPlan {
     /**
      *  Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory
      *
-     *@param  prostor nový aktuální prostor
+     * @param  prostor nový aktuální prostor
      */
     public void setAktualniProstor(Prostor prostor) {
        aktualniProstor = prostor;
-    }
+       this.setChanged();
+       this.notifyObservers();
+    };
     
     /**
      * Getter na proměnnou naslaBratra.
@@ -596,5 +601,4 @@ public class HerniPlan {
     public void setOsvobodilaBratra(){
         naslaBratra = true;
     }
-    
 }

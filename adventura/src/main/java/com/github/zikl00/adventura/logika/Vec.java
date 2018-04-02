@@ -2,6 +2,7 @@
  * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
 package com.github.zikl00.adventura.logika;
 
+
 /*******************************************************************************
  * Třída Postava - popisuje postavu umístěnou v konkrétním prostoru.
  * 
@@ -62,7 +63,11 @@ public class Vec
     public int vratUtocneCislo(){
         return utocneCislo;
     }
-
+    
+    @Override
+    public String toString() {
+    	return getNazev();
+    }
     //== Soukromé metody (instancí i třídy) ========================================
 
 }

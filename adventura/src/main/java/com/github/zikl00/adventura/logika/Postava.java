@@ -14,7 +14,7 @@ import java.util.*;
  * @author    Libor Zíka
  * @version   1.01
  */
-public class Postava
+public class Postava extends Observable
 {
     //== Datové atributy (statické i instancí)======================================
     private String nazev;
@@ -98,6 +98,8 @@ public class Postava
      */
     public void vlozVec(Vec neco){
         loot.put(neco.getNazev(),neco);
+        setChanged();
+        notifyObservers();
     }
     
     /**
@@ -137,6 +139,11 @@ public class Postava
      */
     public String getKecy(){
         return kecy;
+    }
+    
+    @Override
+    public String toString() {
+    	return getNazev();
     }
     //== Soukromé metody (instancí i třídy) ========================================
 
